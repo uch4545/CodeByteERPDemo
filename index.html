@@ -1,0 +1,2061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeByte ERP - Enterprise Business Management Portal</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  
+  <!-- Chart.js 4.4 CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Application Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- =========================================================================
+         LEFT SIDEBAR NAVIGATION
+         ========================================================================= -->
+    <aside class="sidebar" id="appSidebar">
+      <div class="sidebar-header">
+        <a href="#" class="brand-logo">
+          <img src="logo.png" alt="CodeByte Logo" class="brand-logo-img">
+          <div class="brand-text">
+            <h2>CodeByte ERP</h2>
+            <span>Enterprise Cloud</span>
+          </div>
+        </a>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Overview</div>
+        <a class="nav-item active" data-screen="dashboard">
+          <div class="nav-item-left">
+            <i class="fas fa-chart-pie"></i>
+            <span>Dashboard</span>
+          </div>
+          <span class="nav-badge">Live</span>
+        </a>
+
+        <div class="nav-section-title">Operations & Relations</div>
+        <a class="nav-item" data-screen="contacts">
+          <div class="nav-item-left">
+            <i class="fas fa-user-friends"></i>
+            <span>Contacts</span>
+          </div>
+          <span class="nav-badge">3</span>
+        </a>
+
+        <a class="nav-item" data-screen="products">
+          <div class="nav-item-left">
+            <i class="fas fa-boxes-stacked"></i>
+            <span>Products & Stock</span>
+          </div>
+          <span class="nav-badge warning">2 Low</span>
+        </a>
+
+        <div class="nav-section-title">Commercials</div>
+        <a class="nav-item" data-screen="purchases">
+          <div class="nav-item-left">
+            <i class="fas fa-shopping-cart"></i>
+            <span>Purchases</span>
+          </div>
+          <span class="nav-badge danger">Dues</span>
+        </a>
+
+        <a class="nav-item" data-screen="sales">
+          <div class="nav-item-left">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Sales & Invoices</span>
+          </div>
+          <span class="nav-badge">Active</span>
+        </a>
+
+        <a class="nav-item" data-screen="expenses">
+          <div class="nav-item-left">
+            <i class="fas fa-receipt"></i>
+            <span>Expenses</span>
+          </div>
+        </a>
+
+        <div class="nav-section-title">Finance & HR</div>
+        <a class="nav-item" data-screen="payments">
+          <div class="nav-item-left">
+            <i class="fas fa-credit-card"></i>
+            <span>Payments (AR / AP)</span>
+          </div>
+        </a>
+
+        <a class="nav-item" data-screen="payroll">
+          <div class="nav-item-left">
+            <i class="fas fa-briefcase"></i>
+            <span>Payroll</span>
+          </div>
+        </a>
+
+        <a class="nav-item" data-screen="reports">
+          <div class="nav-item-left">
+            <i class="fas fa-chart-line"></i>
+            <span>Financial Reports</span>
+          </div>
+          <span class="nav-badge">10</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile-widget">
+          <div class="user-avatar">AD</div>
+          <div class="user-info">
+            <h4>Admin Executive</h4>
+            <p>HQ Corporate Office</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- =========================================================================
+         MAIN CONTENT LAYOUT
+         ========================================================================= -->
+    <main class="main-wrapper">
+      
+      <!-- Top Sticky Header -->
+      <header class="top-header">
+        <div class="header-left">
+          <button class="sidebar-toggle-btn" id="sidebarToggleBtn" title="Toggle Sidebar">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="page-title-wrap">
+            <h1 id="headerPageTitle">Business Executive Dashboard</h1>
+            <p id="headerPageDesc">Real-time overview of financial health, cashflow and key operations.</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Global search invoices, clients...">
+          </div>
+
+          <button class="header-action-btn" title="System Notifications" onclick="ERPApp.showToast('All background automated tasks operational', 'info')">
+            <i class="far fa-bell"></i>
+            <span class="header-badge">3</span>
+          </button>
+
+          <button class="btn-quick-create" id="btnQuickInvoice">
+            <i class="fas fa-plus"></i>
+            <span>Create Invoice</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Content Views Body -->
+      <div class="content-body">
+        
+        <!-- =====================================================================
+             SCREEN 1: 📊 DASHBOARD
+             ===================================================================== -->
+        <section class="screen-view active-screen" id="screen-dashboard">
+          
+          <!-- Dashboard Quick Banner -->
+          <div class="quick-actions-bar">
+            <div class="quick-actions-info">
+              <h2>Quick Actions & Operations Hub</h2>
+              <p>Accelerate your daily workflow with one-click creation shortcuts</p>
+            </div>
+            <div class="quick-actions-buttons">
+              <button class="btn-white-action" onclick="ERPApp.openModal('modalNewInvoice')">
+                <i class="fas fa-file-invoice"></i> New Invoice
+              </button>
+              <button class="btn-glass-action" onclick="ERPApp.openModal('modalNewCustomer')">
+                <i class="fas fa-user-plus"></i> Add Customer
+              </button>
+              <button class="btn-glass-action" onclick="ERPApp.openModal('modalAdjustStock')">
+                <i class="fas fa-boxes"></i> Adjust Stock
+              </button>
+              <button class="btn-glass-action" onclick="ERPApp.openModal('modalNewExpense')">
+                <i class="fas fa-receipt"></i> Record Expense
+              </button>
+            </div>
+          </div>
+
+          <!-- 7 Primary KPI Cards -->
+          <div class="kpi-grid">
+            
+            <div class="kpi-card sales">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Sales</h3>
+                  <div class="kpi-value" id="dashSales">Rs. 0.00</div>
+                  <div class="kpi-trend trend-up">
+                    <i class="fas fa-arrow-up"></i> +14.2% vs last month
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-chart-line"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card purchases">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Purchases</h3>
+                  <div class="kpi-value" id="dashPurchases">Rs. 0.00</div>
+                  <div class="kpi-trend trend-neutral">
+                    <i class="fas fa-arrow-right"></i> Stable inventory inflow
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-shopping-bag"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card due">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Purchase Due</h3>
+                  <div class="kpi-value" id="dashPurchaseDue">Rs. 0.00</div>
+                  <div class="kpi-trend trend-down">
+                    <i class="fas fa-clock"></i> 3 Vendor bills pending
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card invoices">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Invoices</h3>
+                  <div class="kpi-value" id="dashInvoices">0</div>
+                  <div class="kpi-trend trend-up">
+                    <i class="fas fa-check-double"></i> 98% fulfilment rate
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-file-alt"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card expenses">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Expenses</h3>
+                  <div class="kpi-value" id="dashExpenses">Rs. 0.00</div>
+                  <div class="kpi-trend trend-down">
+                    <i class="fas fa-wallet"></i> Within quarterly budget
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-money-check-alt"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card due">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Total Invoice Due</h3>
+                  <div class="kpi-value" id="dashInvoiceDue">Rs. 0.00</div>
+                  <div class="kpi-trend trend-down">
+                    <i class="fas fa-exclamation-triangle"></i> Customer receivables
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-hand-holding-usd"></i></div>
+              </div>
+            </div>
+
+            <div class="kpi-card cash">
+              <div class="kpi-card-inner">
+                <div class="kpi-info">
+                  <h3>Net Cash</h3>
+                  <div class="kpi-value" id="dashNetCash">Rs. 0.00</div>
+                  <div class="kpi-trend trend-up">
+                    <i class="fas fa-shield-alt"></i> High liquidity reserve
+                  </div>
+                </div>
+                <div class="kpi-icon"><i class="fas fa-university"></i></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Charts Row -->
+          <div class="charts-grid">
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <h3>Sales Revenue vs. Purchases vs. Expenses</h3>
+                  <p>Monthly trends and cashflow comparisons (in Rs.)</p>
+                </div>
+                <div class="chart-actions">
+                  <button class="chart-filter-btn active">2026 Fiscal Year</button>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="chartRevenueVsExpenses"></canvas>
+              </div>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-header">
+                <div class="chart-title">
+                  <h3>Expense Allocation</h3>
+                  <p>Distribution across operational heads</p>
+                </div>
+              </div>
+              <div class="chart-wrapper">
+                <canvas id="chartExpenseBreakdown"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Invoices & Low Stock Alert Tables -->
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+            
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Recent Sales Invoices</h3>
+                  <span class="count-badge">Live Feed</span>
+                </div>
+                <button class="btn-action-outline" onclick="ERPApp.switchScreen('sales')">
+                  <span>View All Sales</span> <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Invoice #</th>
+                      <th>Customer</th>
+                      <th>Date</th>
+                      <th>Grand Total</th>
+                      <th>Due Amount</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashRecentSalesBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Low Stock Alerts</h3>
+                  <span class="count-badge" style="background:#fee2e2; color:#ef4444;">Needs Reorder</span>
+                </div>
+                <button class="btn-action-outline" onclick="ERPApp.openModal('modalAdjustStock')">
+                  <span>Adjust</span>
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product</th>
+                      <th>Stock</th>
+                      <th>Min Level</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashLowStockBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 2: 👥 CONTACTS (Customers, Suppliers, Employees)
+             ===================================================================== -->
+        <section class="screen-view" id="screen-contacts">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="customers">
+              <i class="fas fa-user-tag"></i> <span>Customers</span>
+              <span class="tab-count">6</span>
+            </button>
+            <button class="subtab-btn" data-tab="suppliers">
+              <i class="fas fa-truck"></i> <span>Suppliers</span>
+              <span class="tab-count">5</span>
+            </button>
+            <button class="subtab-btn" data-tab="employees">
+              <i class="fas fa-user-tie"></i> <span>Employees</span>
+              <span class="tab-count">6</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Customers -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-customers">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Customer Directory</h3>
+                  <span class="count-badge">Active Accounts</span>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search customer...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewCustomer')">
+                    <i class="fas fa-user-plus"></i> Add Customer
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer ID</th>
+                      <th>Company / Name</th>
+                      <th>Contact Info</th>
+                      <th>City</th>
+                      <th>Orders</th>
+                      <th>Credit Limit</th>
+                      <th>Outstanding Balance</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblCustomersBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Suppliers -->
+          <div class="subtab-content" id="tab-pane-suppliers">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Registered Suppliers & Vendors</h3>
+                  <span class="count-badge">Procurement Sources</span>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search supplier...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewSupplier')">
+                    <i class="fas fa-plus"></i> Add Supplier
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier ID</th>
+                      <th>Vendor Name</th>
+                      <th>Contact Info</th>
+                      <th>City</th>
+                      <th>Payment Terms</th>
+                      <th>Payables Due</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSuppliersBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 3: Employees -->
+          <div class="subtab-content" id="tab-pane-employees">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Company Staff & Personnel</h3>
+                  <span class="count-badge">Payroll Active</span>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search employee...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewEmployee')">
+                    <i class="fas fa-user-plus"></i> Add Employee
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Emp ID</th>
+                      <th>Full Name</th>
+                      <th>Designation</th>
+                      <th>Department</th>
+                      <th>Contact</th>
+                      <th>Base Salary</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblEmployeesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 3: 📦 PRODUCTS & INVENTORY
+             ===================================================================== -->
+        <section class="screen-view" id="screen-products">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="product-list">
+              <i class="fas fa-list"></i> <span>Product List</span>
+            </button>
+            <button class="subtab-btn" data-tab="stock-adjustment">
+              <i class="fas fa-sliders-h"></i> <span>Stock Adjustment</span>
+            </button>
+            <button class="subtab-btn" data-tab="current-stock">
+              <i class="fas fa-warehouse"></i> <span>Current Stock & Valuation</span>
+            </button>
+            <button class="subtab-btn" data-tab="stock-history">
+              <i class="fas fa-history"></i> <span>Stock History</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Product List -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-product-list">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Catalog Items & Pricing</h3>
+                  <span class="count-badge">Products</span>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search product / SKU...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewProduct')">
+                    <i class="fas fa-plus"></i> Add Product
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Item Description</th>
+                      <th>Category</th>
+                      <th>Unit</th>
+                      <th>Purchase Price</th>
+                      <th>Selling Price</th>
+                      <th>Stock Qty</th>
+                      <th>Min Alert</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblProductsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Stock Adjustment -->
+          <div class="subtab-content" id="tab-pane-stock-adjustment">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Physical Stock Adjustments</h3>
+                  <span class="count-badge">Audit Logs</span>
+                </div>
+                <button class="btn-action-primary" onclick="ERPApp.openModal('modalAdjustStock')">
+                  <i class="fas fa-plus-circle"></i> Create Adjustment
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Ref ID</th>
+                      <th>Date</th>
+                      <th>Product / SKU</th>
+                      <th>Type</th>
+                      <th>Adjusted Qty</th>
+                      <th>Reason / Note</th>
+                      <th>Recorded By</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblStockAdjustmentsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 3: Current Stock & Valuation -->
+          <div class="subtab-content" id="tab-pane-current-stock">
+            <div class="report-summary-bar">
+              <div class="report-summary-box">
+                <p>Total Stock Valuation (At Cost)</p>
+                <h4 id="totalInventoryValuation">Rs. 0.00</h4>
+              </div>
+              <div class="report-summary-box">
+                <p>Tracked Warehouse SKUs</p>
+                <h4>7 Items</h4>
+              </div>
+              <div class="report-summary-box">
+                <p>Inventory Health</p>
+                <h4 style="color:#10b981;">Optimal (85%)</h4>
+              </div>
+            </div>
+
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Real-time On-Hand Stock Summary</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product Name</th>
+                      <th>Category</th>
+                      <th>Available Quantity</th>
+                      <th>Unit Cost</th>
+                      <th>Total Inventory Value</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblCurrentStockBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 4: Stock History -->
+          <div class="subtab-content" id="tab-pane-stock-history">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Stock In/Out Audit Trail</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Log ID</th>
+                      <th>Date</th>
+                      <th>Product</th>
+                      <th>Action Type</th>
+                      <th>Reference #</th>
+                      <th>Qty Change</th>
+                      <th>Resulting Balance</th>
+                      <th>Operator</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblStockHistoryBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 4: 🛒 PURCHASES
+             ===================================================================== -->
+        <section class="screen-view" id="screen-purchases">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="purchase-invoices">
+              <i class="fas fa-file-invoice"></i> <span>Purchase Invoices (Bills)</span>
+            </button>
+            <button class="subtab-btn" data-tab="purchase-returns">
+              <i class="fas fa-undo"></i> <span>Purchase Returns</span>
+            </button>
+            <button class="subtab-btn" data-tab="supplier-payments">
+              <i class="fas fa-receipt"></i> <span>Supplier Payments</span>
+            </button>
+            <button class="subtab-btn" data-tab="outstanding-purchase-due">
+              <i class="fas fa-clock"></i> <span>Outstanding Purchase Due</span>
+              <span class="tab-count" style="background:#fee2e2; color:#ef4444;">3 Dues</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Purchase Invoices -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-purchase-invoices">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Supplier Bills & Purchase Invoices</h3>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search bill #...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.showToast('Purchase invoice creation wizard', 'info')">
+                    <i class="fas fa-plus"></i> New Purchase Bill
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Bill #</th>
+                      <th>Supplier</th>
+                      <th>Bill Date</th>
+                      <th>Due Date</th>
+                      <th>Total Amount</th>
+                      <th>Paid Amount</th>
+                      <th>Balance Due</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblPurchaseInvoicesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Purchase Returns -->
+          <div class="subtab-content" id="tab-pane-purchase-returns">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Debit Notes & Purchase Returns</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Return #</th>
+                      <th>Date</th>
+                      <th>Supplier</th>
+                      <th>Ref Bill</th>
+                      <th>Return Amount</th>
+                      <th>Reason</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblPurchaseReturnsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 3: Supplier Payments -->
+          <div class="subtab-content" id="tab-pane-supplier-payments">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Supplier Payment Vouchers</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Payment #</th>
+                      <th>Date</th>
+                      <th>Supplier</th>
+                      <th>Ref Bill</th>
+                      <th>Amount Paid</th>
+                      <th>Payment Method</th>
+                      <th>Txn / Cheque #</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSupplierPaymentsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 4: Outstanding Purchase Due -->
+          <div class="subtab-content" id="tab-pane-outstanding-purchase-due">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Outstanding Vendor Payables & Aging</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier</th>
+                      <th>Bill #</th>
+                      <th>Bill Date</th>
+                      <th>Due Date</th>
+                      <th>Total Billed</th>
+                      <th>Outstanding Due</th>
+                      <th>Aging</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblOutstandingPurchaseDueBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 5: 💰 SALES
+             ===================================================================== -->
+        <section class="screen-view" id="screen-sales">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="sales-invoices">
+              <i class="fas fa-file-invoice-dollar"></i> <span>Sales Invoices</span>
+            </button>
+            <button class="subtab-btn" data-tab="sales-returns">
+              <i class="fas fa-undo-alt"></i> <span>Sales Returns</span>
+            </button>
+            <button class="subtab-btn" data-tab="customer-payments">
+              <i class="fas fa-hand-holding-usd"></i> <span>Customer Payments</span>
+            </button>
+            <button class="subtab-btn" data-tab="outstanding-invoice-due">
+              <i class="fas fa-exclamation-circle"></i> <span>Outstanding Invoice Due</span>
+              <span class="tab-count" style="background:#fef3c7; color:#b45309;">4 Invoices</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Sales Invoices -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-sales-invoices">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>All Sales Invoices</h3>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search invoice #...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewInvoice')">
+                    <i class="fas fa-plus"></i> Create Sales Invoice
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Invoice #</th>
+                      <th>Customer Name</th>
+                      <th>Date</th>
+                      <th>Due Date</th>
+                      <th>Grand Total</th>
+                      <th>Paid Amount</th>
+                      <th>Balance Due</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSalesInvoicesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Sales Returns -->
+          <div class="subtab-content" id="tab-pane-sales-returns">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Credit Notes & Customer Returns</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Return #</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Ref Invoice</th>
+                      <th>Credit Amount</th>
+                      <th>Reason</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSalesReturnsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 3: Customer Payments -->
+          <div class="subtab-content" id="tab-pane-customer-payments">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Customer Receipt Vouchers</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Receipt #</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Ref Invoice</th>
+                      <th>Amount Received</th>
+                      <th>Payment Mode</th>
+                      <th>Deposit Ref #</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblCustomerPaymentsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 4: Outstanding Invoice Due -->
+          <div class="subtab-content" id="tab-pane-outstanding-invoice-due">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Receivable Tracking & Overdue Invoices</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Invoice #</th>
+                      <th>Issue Date</th>
+                      <th>Due Date</th>
+                      <th>Invoice Total</th>
+                      <th>Unpaid Due</th>
+                      <th>Collection Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblOutstandingInvoiceDueBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 6: 💸 EXPENSES
+             ===================================================================== -->
+        <section class="screen-view" id="screen-expenses">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="record-expenses">
+              <i class="fas fa-file-invoice"></i> <span>Record Expenses</span>
+            </button>
+            <button class="subtab-btn" data-tab="expense-categories">
+              <i class="fas fa-tags"></i> <span>Expense Categories & Budgets</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Record Expenses -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-record-expenses">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Operational Expense Transactions</h3>
+                </div>
+                <div class="table-controls">
+                  <div class="filter-input-wrap">
+                    <i class="fas fa-search"></i>
+                    <input type="text" class="table-search-input" placeholder="Search expense...">
+                  </div>
+                  <button class="btn-action-primary" onclick="ERPApp.openModal('modalNewExpense')">
+                    <i class="fas fa-plus"></i> Record New Expense
+                  </button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher #</th>
+                      <th>Date</th>
+                      <th>Expense Description</th>
+                      <th>Category</th>
+                      <th>Beneficiary / Payee</th>
+                      <th>Payment Mode</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblExpensesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Expense Categories -->
+          <div class="subtab-content" id="tab-pane-expense-categories">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;" id="expenseCategoriesCards"></div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 7: 📈 REPORTS
+             ===================================================================== -->
+        <section class="screen-view" id="screen-reports">
+          
+          <div class="subtabs-bar" style="flex-wrap: wrap;">
+            <button class="subtab-btn active" data-tab="rep-pnl">
+              <i class="fas fa-file-alt"></i> <span>Profit & Loss</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-sales">
+              <i class="fas fa-chart-bar"></i> <span>Sales Report</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-purchases">
+              <i class="fas fa-shopping-bag"></i> <span>Purchase Report</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-expenses">
+              <i class="fas fa-wallet"></i> <span>Expense Report</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-stock">
+              <i class="fas fa-boxes"></i> <span>Stock Report</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-custbalance">
+              <i class="fas fa-users"></i> <span>Customer Balance</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-suppbalance">
+              <i class="fas fa-truck-loading"></i> <span>Supplier Balance</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-outpurchase">
+              <i class="fas fa-clock"></i> <span>Outstanding Purchase Due</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-outinvoice">
+              <i class="fas fa-exclamation-circle"></i> <span>Outstanding Invoice Due</span>
+            </button>
+            <button class="subtab-btn" data-tab="rep-cashflow">
+              <i class="fas fa-chart-line"></i> <span>Cash Flow Report</span>
+            </button>
+          </div>
+
+          <!-- Report 1: Profit & Loss Statement -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-rep-pnl">
+            <div class="pnl-container">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #e2e8f0; padding-bottom:12px;">
+                <div>
+                  <h2 style="font-size:18px; font-weight:800;">Income Statement (Profit & Loss)</h2>
+                  <p style="font-size:12px; color:#64748b;">Period: Fiscal Year 2026 (All amounts in Pakistani Rupee - Rs.)</p>
+                </div>
+                <button class="btn-action-outline" onclick="window.print()">
+                  <i class="fas fa-print"></i> Print Statement
+                </button>
+              </div>
+
+              <div class="pnl-section-title">Revenue from Operations</div>
+              <div class="pnl-row"><span>Gross Sales Revenue</span><span class="amount" id="pnlGrossSales">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Less: Sales Returns & Discounts</span><span class="amount negative" id="pnlReturns">-Rs. 0.00</span></div>
+              <div class="pnl-row subtotal"><span>Net Revenue</span><span class="amount" id="pnlNetRevenue">Rs. 0.00</span></div>
+              
+              <div class="pnl-section-title">Cost of Goods Sold (COGS)</div>
+              <div class="pnl-row"><span>Direct Raw Materials & Manufacturing Costs</span><span class="amount negative" id="pnlCogs">-Rs. 0.00</span></div>
+              <div class="pnl-row subtotal" style="background:#ecfdf5; color:#047857;"><span>Gross Operating Profit</span><span class="amount positive" id="pnlGrossProfit">Rs. 0.00</span></div>
+
+              <div class="pnl-section-title">Operating & Administrative Expenses</div>
+              <div class="pnl-row"><span>Staff Salaries & Wages</span><span class="amount" id="pnlExpSalaries">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Warehouse Facility Rent & Leases</span><span class="amount" id="pnlExpRent">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Logistics, Fleet Fuel & Freight</span><span class="amount" id="pnlExpLogistics">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Commercial Utilities & Power</span><span class="amount" id="pnlExpUtilities">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Marketing & Customer Acquisition</span><span class="amount" id="pnlExpMarketing">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Office Supplies & Maintenance</span><span class="amount" id="pnlExpOffice">Rs. 0.00</span></div>
+              <div class="pnl-row subtotal"><span>Total Operating Expenses</span><span class="amount negative" id="pnlTotalExpenses">-Rs. 0.00</span></div>
+
+              <div class="pnl-row net-total">
+                <span>NET OPERATING PROFIT (EBIT)</span>
+                <span id="pnlNetProfit">Rs. 0.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 2: Cash Flow -->
+          <div class="subtab-content" id="tab-pane-rep-cashflow">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Monthly Cash Flow Statement</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Month</th>
+                      <th>Cash Inflow (Collections)</th>
+                      <th>Cash Outflow (Purchases + Expenses)</th>
+                      <th>Net Cash Flow</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblCashFlowBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 3: Customer Balance -->
+          <div class="subtab-content" id="tab-pane-rep-custbalance">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Customer Balance & Exposure Statement</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer Name</th>
+                      <th>City</th>
+                      <th>Authorized Credit Limit</th>
+                      <th>Current Balance Due</th>
+                      <th>Credit Exposure Risk</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblCustomerBalanceReportBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 4: Supplier Balance -->
+          <div class="subtab-content" id="tab-pane-rep-suppbalance">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Supplier Payables & Balance Summary</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier Company</th>
+                      <th>City</th>
+                      <th>Payment Terms</th>
+                      <th>Outstanding Balance</th>
+                      <th>Settlement Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSupplierBalanceReportBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 5: Sales Report -->
+          <div class="subtab-content" id="tab-pane-rep-sales">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Periodic Sales Performance Report</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Invoice #</th>
+                      <th>Customer</th>
+                      <th>Invoice Date</th>
+                      <th>Taxable Amount</th>
+                      <th>Sales Tax (18%)</th>
+                      <th>Net Revenue (Rs.)</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportSalesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 6: Purchase Report -->
+          <div class="subtab-content" id="tab-pane-rep-purchases">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Procurement & Purchase Report</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Bill #</th>
+                      <th>Vendor / Supplier</th>
+                      <th>Bill Date</th>
+                      <th>Payment Terms</th>
+                      <th>Total Purchase (Rs.)</th>
+                      <th>Payment Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportPurchasesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 7: Expense Report -->
+          <div class="subtab-content" id="tab-pane-rep-expenses">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Expense Head Breakdown Statement</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Voucher #</th>
+                      <th>Date</th>
+                      <th>Expense Category</th>
+                      <th>Payee</th>
+                      <th>Amount (Rs.)</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportExpensesBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 8: Stock Report -->
+          <div class="subtab-content" id="tab-pane-rep-stock">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Inventory Turnover & Stock Status</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>SKU</th>
+                      <th>Product Description</th>
+                      <th>Category</th>
+                      <th>Stock On Hand</th>
+                      <th>Unit Valuation (Rs.)</th>
+                      <th>Total Valuation (Rs.)</th>
+                      <th>Inventory Health</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportStockBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 9: Outstanding Purchase Due Report -->
+          <div class="subtab-content" id="tab-pane-rep-outpurchase">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Supplier Payables Aging & Overdue Timeline</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier</th>
+                      <th>Bill #</th>
+                      <th>Due Date</th>
+                      <th>Total Bill (Rs.)</th>
+                      <th>Unsettled Due (Rs.)</th>
+                      <th>Aging Bracket</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportOutPurchaseBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Report 10: Outstanding Invoice Due Report -->
+          <div class="subtab-content" id="tab-pane-rep-outinvoice">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Customer Receivables Aging & Follow-up Statement</h3>
+                </div>
+                <div class="table-controls">
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Invoice #</th>
+                      <th>Due Date</th>
+                      <th>Grand Total (Rs.)</th>
+                      <th>Receivable Due (Rs.)</th>
+                      <th>Overdue Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblReportOutInvoiceBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 8: 💼 PAYROLL
+             ===================================================================== -->
+        <section class="screen-view" id="screen-payroll">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="employee-salary">
+              <i class="fas fa-money-check-alt"></i> <span>Employee Salary Structure</span>
+            </button>
+            <button class="subtab-btn" data-tab="payslips">
+              <i class="fas fa-file-invoice"></i> <span>Generated Payslips</span>
+            </button>
+            <button class="subtab-btn" data-tab="salary-payments">
+              <i class="fas fa-calendar-check"></i> <span>Salary Payment Batches</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Employee Salary -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-employee-salary">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Staff Compensation Packages</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Emp ID</th>
+                      <th>Employee Name</th>
+                      <th>Pay Grade</th>
+                      <th>Basic Salary</th>
+                      <th>Allowances</th>
+                      <th>Deductions</th>
+                      <th>Net Monthly Salary</th>
+                      <th>Disbursement Mode</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblEmployeeSalaryBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Payslips -->
+          <div class="subtab-content" id="tab-pane-payslips">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Monthly Issued Payslips</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Slip #</th>
+                      <th>Employee</th>
+                      <th>Designation</th>
+                      <th>Pay Month</th>
+                      <th>Basic</th>
+                      <th>Allowances</th>
+                      <th>Deductions</th>
+                      <th>Net Pay</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblPayslipsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 3: Salary Payments -->
+          <div class="subtab-content" id="tab-pane-salary-payments">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Payroll Batch Disbursements</h3>
+                </div>
+                <button class="btn-action-primary" onclick="ERPApp.showToast('Payroll batch already closed for current period', 'info')">
+                  <i class="fas fa-play"></i> Process New Batch
+                </button>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Batch ID</th>
+                      <th>Payroll Period</th>
+                      <th>Total Staff</th>
+                      <th>Total Disbursed</th>
+                      <th>Payment Date</th>
+                      <th>Funding Bank Account</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblSalaryPaymentsBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        <!-- =====================================================================
+             SCREEN 9: 💳 PAYMENTS (AR & AP)
+             ===================================================================== -->
+        <section class="screen-view" id="screen-payments">
+          
+          <div class="subtabs-bar">
+            <button class="subtab-btn active" data-tab="accounts-receivable">
+              <i class="fas fa-hand-holding-usd"></i> <span>Accounts Receivable (Customer Payments)</span>
+            </button>
+            <button class="subtab-btn" data-tab="accounts-payable">
+              <i class="fas fa-money-bill-wave"></i> <span>Accounts Payable (Supplier Payments)</span>
+            </button>
+          </div>
+
+          <!-- Sub-tab 1: Accounts Receivable -->
+          <div class="subtab-content active-tab-pane" id="tab-pane-accounts-receivable">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Accounts Receivable (Customer Balances & Aging)</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Customer</th>
+                      <th>Total Invoiced</th>
+                      <th>Total Collected</th>
+                      <th>Balance Due</th>
+                      <th>0 - 30 Days</th>
+                      <th>31 - 60 Days</th>
+                      <th>Risk Category</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblAccountsReceivableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-tab 2: Accounts Payable -->
+          <div class="subtab-content" id="tab-pane-accounts-payable">
+            <div class="table-card">
+              <div class="table-card-header">
+                <div class="table-card-title">
+                  <h3>Accounts Payable (Supplier Payables Schedule)</h3>
+                </div>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Supplier</th>
+                      <th>Total Billed</th>
+                      <th>Total Paid</th>
+                      <th>Balance Due</th>
+                      <th>Schedule Window</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tblAccountsPayableBody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- =========================================================================
+       MODAL 1: CREATE SALES INVOICE (Interactive Repeater)
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewInvoice">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-header">
+        <h3><i class="fas fa-file-invoice-dollar text-primary"></i> Create Sales Invoice</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formNewInvoice">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Customer <span class="required">*</span></label>
+              <select class="form-control" id="invCustomerSelect" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Terms</label>
+              <select class="form-control" id="invTerms">
+                <option>Net 15 Days</option>
+                <option>Net 30 Days</option>
+                <option>Due on Receipt</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Invoice Date</label>
+              <input type="date" class="form-control" id="invDate" value="2026-08-11" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Due Date</label>
+              <input type="date" class="form-control" id="invDueDate" value="2026-08-26" required>
+            </div>
+          </div>
+
+          <h4 style="margin-top:20px; font-size:13px; font-weight:700; text-transform:uppercase; color:#4f46e5;">Invoice Line Items</h4>
+          
+          <table class="invoice-items-table">
+            <thead>
+              <tr>
+                <th style="width: 45%;">Item / Product</th>
+                <th style="width: 15%;">Quantity</th>
+                <th style="width: 20%;">Price (Rs.)</th>
+                <th style="width: 15%;">Line Total</th>
+                <th style="width: 5%;"></th>
+              </tr>
+            </thead>
+            <tbody id="invoiceItemsBody"></tbody>
+          </table>
+
+          <button type="button" class="btn-action-outline" id="btnInvoiceAddRow">
+            <i class="fas fa-plus"></i> Add Another Item
+          </button>
+
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-top:20px;">
+            <div style="width: 45%;">
+              <div class="form-group">
+                <label class="form-label">Customer Notes</label>
+                <textarea class="form-control" placeholder="Enter terms or payment instructions..."></textarea>
+              </div>
+            </div>
+
+            <div class="invoice-summary-box">
+              <div class="invoice-summary-row">
+                <span>Subtotal:</span>
+                <span class="amount" id="invSubtotalDisplay">Rs. 0.00</span>
+              </div>
+              <div class="invoice-summary-row">
+                <span>Sales Tax (%):</span>
+                <input type="number" id="invTaxRate" class="form-control" style="width:70px; padding:4px 8px; text-align:right;" value="18" min="0" oninput="ERPApp.calculateInvoiceTotals()">
+              </div>
+              <div class="invoice-summary-row">
+                <span>Tax Amount:</span>
+                <span class="amount" id="invTaxDisplay">Rs. 0.00</span>
+              </div>
+              <div class="invoice-summary-row">
+                <span>Discount (Rs.):</span>
+                <input type="number" id="invDiscountAmount" class="form-control" style="width:100px; padding:4px 8px; text-align:right;" value="0" min="0" oninput="ERPApp.calculateInvoiceTotals()">
+              </div>
+              <div class="invoice-summary-row" style="display:none;">
+                <span>Discount Display:</span>
+                <span class="amount negative" id="invDiscountDisplay">-Rs. 0.00</span>
+              </div>
+              <div class="invoice-summary-row total-row">
+                <span>Grand Total:</span>
+                <span class="amount" id="invGrandTotalDisplay">Rs. 0.00</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-check"></i> Generate Invoice</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2: VIEW & PRINT INVOICE
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalViewInvoice">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3><i class="fas fa-print text-primary"></i> Invoice Document Preview</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body printable-area">
+        <div class="invoice-view-paper" id="invoicePaperContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-action-outline modal-cancel-btn">Close</button>
+        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 3: VIEW & PRINT PAYSLIP
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalViewPayslip">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt text-primary"></i> Employee Payslip Document</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body printable-area">
+        <div class="payslip-view-paper" id="payslipPaperContent"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-action-outline modal-cancel-btn">Close</button>
+        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Payslip</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 4: ADD CUSTOMER
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewCustomer">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-plus text-primary"></i> Add New Customer</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formNewCustomer">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Customer / Company Name <span class="required">*</span></label>
+              <input type="text" class="form-control" id="custName" placeholder="e.g. Allied Traders Ltd" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Contact Person</label>
+              <input type="text" class="form-control" id="custContactPerson" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number <span class="required">*</span></label>
+              <input type="text" class="form-control" id="custPhone" placeholder="+92 300 0000000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" id="custCity" placeholder="e.g. Lahore">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Credit Limit (Rs.)</label>
+              <input type="number" class="form-control" id="custCreditLimit" placeholder="1000000" value="500000">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-save"></i> Save Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 5: ADD SUPPLIER
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewSupplier">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-truck text-primary"></i> Register Supplier / Vendor</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formNewSupplier">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Supplier / Company Name <span class="required">*</span></label>
+              <input type="text" class="form-control" id="suppCompany" placeholder="e.g. Pak Industrial Supplies" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Key Contact Person</label>
+              <input type="text" class="form-control" id="suppContactPerson" placeholder="Full Name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number <span class="required">*</span></label>
+              <input type="text" class="form-control" id="suppPhone" placeholder="+92 321 0000000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" id="suppCity" placeholder="e.g. Karachi">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Terms</label>
+              <select class="form-control" id="suppTerms">
+                <option>Net 30 Days</option>
+                <option>Net 15 Days</option>
+                <option>Cash on Delivery</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-save"></i> Save Supplier</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 6: ADD EMPLOYEE
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewEmployee">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-user-tie text-primary"></i> Add Company Employee</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formNewEmployee">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Full Name <span class="required">*</span></label>
+              <input type="text" class="form-control" id="empName" placeholder="Employee Name" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Designation <span class="required">*</span></label>
+              <input type="text" class="form-control" id="empDesig" placeholder="e.g. Accounts Officer" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Department</label>
+              <select class="form-control" id="empDept">
+                <option>Finance</option>
+                <option>Operations</option>
+                <option>Warehouse</option>
+                <option>Sales</option>
+                <option>Procurement</option>
+                <option>Maintenance</option>
+              </select>
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">Monthly Basic Salary (Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="empBasicSalary" placeholder="100000" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-save"></i> Save Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 7: ADD PRODUCT
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewProduct">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-box text-primary"></i> Add Catalog Product</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formNewProduct">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Product Name <span class="required">*</span></label>
+              <input type="text" class="form-control" id="prdName" placeholder="e.g. Heavy Duty Steel Flange" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">SKU Code <span class="required">*</span></label>
+              <input type="text" class="form-control" id="prdSku" placeholder="FLG-ST-50" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category</label>
+              <select class="form-control" id="prdCategory">
+                <option>Raw Materials</option>
+                <option>Hardware</option>
+                <option>Lubricants</option>
+                <option>Electrical</option>
+                <option>Fasteners</option>
+                <option>Plumbing</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Unit of Measure</label>
+              <select class="form-control" id="prdUnit">
+                <option>Pcs</option>
+                <option>Box</option>
+                <option>Bucket</option>
+                <option>Roll</option>
+                <option>Length</option>
+                <option>Kg</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Initial Stock Qty</label>
+              <input type="number" class="form-control" id="prdInitialStock" value="50" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Purchase Price (Cost Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="prdPurchasePrice" placeholder="2500" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Selling Price (Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="prdSalePrice" placeholder="3800" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-save"></i> Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 8: ADJUST STOCK
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalAdjustStock">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-sliders-h text-primary"></i> Adjust Inventory Stock</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formAdjustStock">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Select Product <span class="required">*</span></label>
+              <select class="form-control" id="adjProductSelect" required></select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Adjustment Type <span class="required">*</span></label>
+              <select class="form-control" id="adjType">
+                <option value="Addition (+)">Addition (+)</option>
+                <option value="Reduction (-)">Reduction (-)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quantity <span class="required">*</span></label>
+              <input type="number" class="form-control" id="adjQty" value="5" min="1" required>
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">Reason for Adjustment <span class="required">*</span></label>
+              <input type="text" class="form-control" id="adjReason" placeholder="e.g. Damaged in warehouse / Recount surplus" required>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-check-circle"></i> Commit Adjustment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 9: RECORD EXPENSE
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalNewExpense">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-receipt text-primary"></i> Record Operational Expense</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formRecordExpense">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Expense Title / Description <span class="required">*</span></label>
+              <input type="text" class="form-control" id="expTitle" placeholder="e.g. Commercial Electric Bill" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Category <span class="required">*</span></label>
+              <select class="form-control" id="expCategorySelect">
+                <option>Utilities & Power</option>
+                <option>Warehouse Rent</option>
+                <option>Logistics & Fuel</option>
+                <option>Marketing & Ads</option>
+                <option>Office Supplies</option>
+                <option>Maintenance & Repairs</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Beneficiary / Payee <span class="required">*</span></label>
+              <input type="text" class="form-control" id="expPayee" placeholder="e.g. LESCO / Service Provider" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Amount (Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="expAmount" placeholder="50000" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Mode</label>
+              <select class="form-control" id="expPaymentMode">
+                <option>Online Bank</option>
+                <option>Petty Cash</option>
+                <option>Corporate Card</option>
+                <option>Pay Order</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-save"></i> Save Expense</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 10: SETTLE SUPPLIER PAYMENT
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalSupplierPay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-money-bill-wave text-primary"></i> Settle Supplier Payable</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formSupplierPay">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group col-span-2">
+              <label class="form-label">Supplier / Vendor</label>
+              <input type="text" class="form-control" id="spaySupplierName" readonly>
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">Payment Amount (Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="spayAmount" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Payment Channel</label>
+              <select class="form-control" id="spayMethod">
+                <option>Bank Transfer (Meezan Bank)</option>
+                <option>Online Banking (HBL)</option>
+                <option>Crossed Cheque</option>
+                <option>Cash Voucher</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Txn Reference #</label>
+              <input type="text" class="form-control" id="spayRef" placeholder="e.g. FT-89201">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-check"></i> Confirm Payment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 11: RECEIVE CUSTOMER PAYMENT
+       ========================================================================= -->
+  <div class="modal-overlay" id="modalCustomerPay">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3><i class="fas fa-hand-holding-usd text-primary"></i> Collect Customer Payment</h3>
+        <button class="modal-close-btn">&times;</button>
+      </div>
+      <form id="formCustomerPay">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label">Customer Name</label>
+              <input type="text" class="form-control" id="cpayCustomerName" readonly>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Invoice Ref</label>
+              <input type="text" class="form-control" id="cpayInvoiceRef" readonly>
+            </div>
+            <div class="form-group col-span-2">
+              <label class="form-label">Collected Amount (Rs.) <span class="required">*</span></label>
+              <input type="number" class="form-control" id="cpayAmount" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Deposit Channel</label>
+              <select class="form-control" id="cpayMethod">
+                <option>Direct Bank Deposit (Meezan)</option>
+                <option>Online Bank Transfer</option>
+                <option>Cheque Deposit</option>
+                <option>Cash Handover</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Deposit Slip / Ref #</label>
+              <input type="text" class="form-control" id="cpayRef" placeholder="e.g. DEP-99882">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-check-circle"></i> Confirm Receipt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Application Logic & Data -->
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
