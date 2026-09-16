@@ -38,7 +38,7 @@
   --bg-sidebar: #0f172a;
   --bg-sidebar-hover: #1e293b;
   --bg-sidebar-active: #334155;
-  
+
   --text-main: #0f172a;
   --text-muted: #64748b;
   --text-light: #94a3b8;
@@ -70,14 +70,51 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
+[data-theme="dark"] {
+  --bg-main: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  --border-light: #1e293b;
+  --bg-sidebar: #020617;
+  --bg-sidebar-hover: #0f172a;
+  --bg-sidebar-active: #1e293b;
+}
+
+.theme-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.theme-toggle-btn:hover {
+  background-color: var(--bg-main);
+  color: var(--primary);
+}
+
+
 /* Reset & Base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: var(--font-sans);
   background-color: var(--bg-main);
@@ -118,6 +155,7 @@ html, body {
 .sidebar::-webkit-scrollbar {
   width: 5px;
 }
+
 .sidebar::-webkit-scrollbar-thumb {
   background: #334155;
   border-radius: 4px;
@@ -485,6 +523,7 @@ html, body {
     opacity: 0;
     transform: translateY(4px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -626,9 +665,11 @@ html, body {
 .trend-up {
   color: var(--success);
 }
+
 .trend-down {
   color: var(--danger);
 }
+
 .trend-neutral {
   color: var(--text-muted);
 }
@@ -646,12 +687,41 @@ html, body {
 }
 
 /* Card Accent Variations */
-.kpi-card.sales { --card-accent: #10b981; --icon-color: #10b981; --icon-bg: #d1fae5; }
-.kpi-card.purchases { --card-accent: #3b82f6; --icon-color: #3b82f6; --icon-bg: #dbeafe; }
-.kpi-card.expenses { --card-accent: #f43f5e; --icon-color: #f43f5e; --icon-bg: #ffe4e6; }
-.kpi-card.due { --card-accent: #f59e0b; --icon-color: #f59e0b; --icon-bg: #fef3c7; }
-.kpi-card.invoices { --card-accent: #8b5cf6; --icon-color: #8b5cf6; --icon-bg: #ede9fe; }
-.kpi-card.cash { --card-accent: #06b6d4; --icon-color: #06b6d4; --icon-bg: #cffafe; }
+.kpi-card.sales {
+  --card-accent: #10b981;
+  --icon-color: #10b981;
+  --icon-bg: #d1fae5;
+}
+
+.kpi-card.purchases {
+  --card-accent: #3b82f6;
+  --icon-color: #3b82f6;
+  --icon-bg: #dbeafe;
+}
+
+.kpi-card.expenses {
+  --card-accent: #f43f5e;
+  --icon-color: #f43f5e;
+  --icon-bg: #ffe4e6;
+}
+
+.kpi-card.due {
+  --card-accent: #f59e0b;
+  --icon-color: #f59e0b;
+  --icon-bg: #fef3c7;
+}
+
+.kpi-card.invoices {
+  --card-accent: #8b5cf6;
+  --icon-color: #8b5cf6;
+  --icon-bg: #ede9fe;
+}
+
+.kpi-card.cash {
+  --card-accent: #06b6d4;
+  --icon-color: #06b6d4;
+  --icon-bg: #cffafe;
+}
 
 /* ==========================================================================
    Dashboard Charts & Sections Grid
@@ -683,6 +753,7 @@ html, body {
   font-weight: 700;
   color: var(--text-main);
 }
+
 .chart-title p {
   font-size: 12px;
   color: var(--text-muted);
@@ -964,6 +1035,7 @@ html, body {
 .data-table td.amount.positive {
   color: var(--success);
 }
+
 .data-table td.amount.negative {
   color: var(--danger);
 }
@@ -980,22 +1052,34 @@ html, body {
   text-transform: capitalize;
 }
 
-.badge-paid, .badge-active, .badge-in-stock, .badge-settled {
+.badge-paid,
+.badge-active,
+.badge-in-stock,
+.badge-settled {
   background: var(--success-light);
   color: var(--success-dark);
 }
 
-.badge-pending, .badge-partial, .badge-low-stock, .badge-on-leave {
+.badge-pending,
+.badge-partial,
+.badge-low-stock,
+.badge-on-leave {
   background: var(--warning-light);
   color: var(--warning-dark);
 }
 
-.badge-unpaid, .badge-due, .badge-out-of-stock, .badge-overdue, .badge-inactive {
+.badge-unpaid,
+.badge-due,
+.badge-out-of-stock,
+.badge-overdue,
+.badge-inactive {
   background: var(--danger-light);
   color: var(--danger-dark);
 }
 
-.badge-draft, .badge-returned, .badge-neutral {
+.badge-draft,
+.badge-returned,
+.badge-neutral {
   background: #e2e8f0;
   color: #475569;
 }
@@ -1361,7 +1445,8 @@ textarea.form-control {
 /* ==========================================================================
    Printable Invoice & Payslip Template (In Modal)
    ========================================================================== */
-.invoice-view-paper, .payslip-view-paper {
+.invoice-view-paper,
+.payslip-view-paper {
   background: #ffffff;
   padding: 36px;
   border-radius: var(--radius-md);
@@ -1444,12 +1529,15 @@ textarea.form-control {
 .toast.success {
   border-left: 4px solid var(--success);
 }
+
 .toast.info {
   border-left: 4px solid var(--primary);
 }
+
 .toast.warning {
   border-left: 4px solid var(--warning);
 }
+
 .toast.error {
   border-left: 4px solid var(--danger);
 }
@@ -1459,6 +1547,7 @@ textarea.form-control {
     transform: translateX(100%);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;
@@ -1472,9 +1561,12 @@ textarea.form-control {
   body * {
     visibility: hidden;
   }
-  .printable-area, .printable-area * {
+
+  .printable-area,
+  .printable-area * {
     visibility: visible;
   }
+
   .printable-area {
     position: absolute;
     left: 0;
@@ -1483,7 +1575,11 @@ textarea.form-control {
     margin: 0;
     padding: 20px;
   }
-  .modal-footer, .modal-header, .sidebar, .top-header {
+
+  .modal-footer,
+  .modal-header,
+  .sidebar,
+  .top-header {
     display: none !important;
   }
 }
@@ -1493,12 +1589,15 @@ textarea.form-control {
   .charts-grid {
     grid-template-columns: 1fr;
   }
+
   .sidebar {
     transform: translateX(-100%);
   }
+
   .sidebar.mobile-open {
     transform: translateX(0);
   }
+
   .main-wrapper {
     margin-left: 0;
   }
@@ -1508,12 +1607,16 @@ textarea.form-control {
   .kpi-grid {
     grid-template-columns: 1fr;
   }
-  .form-grid, .form-grid.grid-3 {
+
+  .form-grid,
+  .form-grid.grid-3 {
     grid-template-columns: 1fr;
   }
+
   .top-header {
     padding: 0 16px;
   }
+
   .content-body {
     padding: 16px;
   }
