@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CodeByte ERP - Enterprise Business Management Portal</title>
   <link rel="icon" type="image/png" href="logo.png">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
   <!-- FontAwesome 6 Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  
+
   <!-- Chart.js 4.4 CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <!-- Application Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
   <div class="app-container">
-    
+
     <!-- =========================================================================
          LEFT SIDEBAR NAVIGATION
          ========================================================================= -->
@@ -111,6 +115,24 @@
           </div>
           <span class="nav-badge">10</span>
         </a>
+
+        <div class="nav-section-title">Administration</div>
+        <a class="nav-item" data-screen="settings">
+          <div class="nav-item-left">
+            <i class="fas fa-sliders-h"></i>
+            <span>Settings & Masters</span>
+          </div>
+          <span class="nav-badge">Config</span>
+        </a>
+
+        <div class="nav-section-title">External</div>
+        <a href="#" class="nav-item" onclick="window.open('https://umasuppliers.pk', '_blank')">
+          <div class="nav-item-left">
+            <i class="fas fa-globe"></i>
+            <span>Main Website</span>
+          </div>
+          <i class="fas fa-external-link-alt" style="font-size: 0.8rem; margin-left: auto;"></i>
+        </a>
       </nav>
 
       <div class="sidebar-footer">
@@ -128,7 +150,7 @@
          MAIN CONTENT LAYOUT
          ========================================================================= -->
     <main class="main-wrapper">
-      
+
       <!-- Top Sticky Header -->
       <header class="top-header">
         <div class="header-left">
@@ -147,7 +169,12 @@
             <input type="text" placeholder="Global search invoices, clients...">
           </div>
 
-          <button class="header-action-btn" title="System Notifications" onclick="ERPApp.showToast('All background automated tasks operational', 'info')">
+          <button class="header-action-btn theme-toggle-btn" id="themeToggleBtn" title="Toggle Dark/Light Mode">
+            <i class="fas fa-moon"></i>
+          </button>
+
+          <button class="header-action-btn" title="System Notifications"
+            onclick="ERPApp.showToast('All background automated tasks operational', 'info')">
             <i class="far fa-bell"></i>
             <span class="header-badge">3</span>
           </button>
@@ -161,12 +188,12 @@
 
       <!-- Content Views Body -->
       <div class="content-body">
-        
+
         <!-- =====================================================================
              SCREEN 1: 📊 DASHBOARD
              ===================================================================== -->
         <section class="screen-view active-screen" id="screen-dashboard">
-          
+
           <!-- Dashboard Quick Banner -->
           <div class="quick-actions-bar">
             <div class="quick-actions-info">
@@ -191,7 +218,7 @@
 
           <!-- 7 Primary KPI Cards -->
           <div class="kpi-grid">
-            
+
             <div class="kpi-card sales">
               <div class="kpi-card-inner">
                 <div class="kpi-info">
@@ -317,7 +344,7 @@
 
           <!-- Recent Invoices & Low Stock Alert Tables -->
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
-            
+
             <div class="table-card">
               <div class="table-card-header">
                 <div class="table-card-title">
@@ -380,7 +407,7 @@
              SCREEN 2: 👥 CONTACTS (Customers, Suppliers, Employees)
              ===================================================================== -->
         <section class="screen-view" id="screen-contacts">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="customers">
               <i class="fas fa-user-tag"></i> <span>Customers</span>
@@ -517,7 +544,7 @@
              SCREEN 3: 📦 PRODUCTS & INVENTORY
              ===================================================================== -->
         <section class="screen-view" id="screen-products">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="product-list">
               <i class="fas fa-list"></i> <span>Product List</span>
@@ -680,7 +707,7 @@
              SCREEN 4: 🛒 PURCHASES
              ===================================================================== -->
         <section class="screen-view" id="screen-purchases">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="purchase-invoices">
               <i class="fas fa-file-invoice"></i> <span>Purchase Invoices (Bills)</span>
@@ -709,7 +736,8 @@
                     <i class="fas fa-search"></i>
                     <input type="text" class="table-search-input" placeholder="Search bill #...">
                   </div>
-                  <button class="btn-action-primary" onclick="ERPApp.showToast('Purchase invoice creation wizard', 'info')">
+                  <button class="btn-action-primary"
+                    onclick="ERPApp.showToast('Purchase invoice creation wizard', 'info')">
                     <i class="fas fa-plus"></i> New Purchase Bill
                   </button>
                 </div>
@@ -824,7 +852,7 @@
              SCREEN 5: 💰 SALES
              ===================================================================== -->
         <section class="screen-view" id="screen-sales">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="sales-invoices">
               <i class="fas fa-file-invoice-dollar"></i> <span>Sales Invoices</span>
@@ -968,7 +996,7 @@
              SCREEN 6: 💸 EXPENSES
              ===================================================================== -->
         <section class="screen-view" id="screen-expenses">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="record-expenses">
               <i class="fas fa-file-invoice"></i> <span>Record Expenses</span>
@@ -1017,7 +1045,8 @@
 
           <!-- Sub-tab 2: Expense Categories -->
           <div class="subtab-content" id="tab-pane-expense-categories">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;" id="expenseCategoriesCards"></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px;"
+              id="expenseCategoriesCards"></div>
           </div>
 
         </section>
@@ -1026,7 +1055,7 @@
              SCREEN 7: 📈 REPORTS
              ===================================================================== -->
         <section class="screen-view" id="screen-reports">
-          
+
           <div class="subtabs-bar" style="flex-wrap: wrap;">
             <button class="subtab-btn active" data-tab="rep-pnl">
               <i class="fas fa-file-alt"></i> <span>Profit & Loss</span>
@@ -1063,10 +1092,12 @@
           <!-- Report 1: Profit & Loss Statement -->
           <div class="subtab-content active-tab-pane" id="tab-pane-rep-pnl">
             <div class="pnl-container">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #e2e8f0; padding-bottom:12px;">
+              <div
+                style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; border-bottom:1px solid #e2e8f0; padding-bottom:12px;">
                 <div>
                   <h2 style="font-size:18px; font-weight:800;">Income Statement (Profit & Loss)</h2>
-                  <p style="font-size:12px; color:#64748b;">Period: Fiscal Year 2026 (All amounts in Pakistani Rupee - Rs.)</p>
+                  <p style="font-size:12px; color:#64748b;">Period: Fiscal Year 2026 (All amounts in Pakistani Rupee -
+                    Rs.)</p>
                 </div>
                 <button class="btn-action-outline" onclick="window.print()">
                   <i class="fas fa-print"></i> Print Statement
@@ -1074,22 +1105,34 @@
               </div>
 
               <div class="pnl-section-title">Revenue from Operations</div>
-              <div class="pnl-row"><span>Gross Sales Revenue</span><span class="amount" id="pnlGrossSales">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Less: Sales Returns & Discounts</span><span class="amount negative" id="pnlReturns">-Rs. 0.00</span></div>
-              <div class="pnl-row subtotal"><span>Net Revenue</span><span class="amount" id="pnlNetRevenue">Rs. 0.00</span></div>
-              
+              <div class="pnl-row"><span>Gross Sales Revenue</span><span class="amount" id="pnlGrossSales">Rs.
+                  0.00</span></div>
+              <div class="pnl-row"><span>Less: Sales Returns & Discounts</span><span class="amount negative"
+                  id="pnlReturns">-Rs. 0.00</span></div>
+              <div class="pnl-row subtotal"><span>Net Revenue</span><span class="amount" id="pnlNetRevenue">Rs.
+                  0.00</span></div>
+
               <div class="pnl-section-title">Cost of Goods Sold (COGS)</div>
-              <div class="pnl-row"><span>Direct Raw Materials & Manufacturing Costs</span><span class="amount negative" id="pnlCogs">-Rs. 0.00</span></div>
-              <div class="pnl-row subtotal" style="background:#ecfdf5; color:#047857;"><span>Gross Operating Profit</span><span class="amount positive" id="pnlGrossProfit">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Direct Raw Materials & Manufacturing Costs</span><span class="amount negative"
+                  id="pnlCogs">-Rs. 0.00</span></div>
+              <div class="pnl-row subtotal" style="background:#ecfdf5; color:#047857;"><span>Gross Operating
+                  Profit</span><span class="amount positive" id="pnlGrossProfit">Rs. 0.00</span></div>
 
               <div class="pnl-section-title">Operating & Administrative Expenses</div>
-              <div class="pnl-row"><span>Staff Salaries & Wages</span><span class="amount" id="pnlExpSalaries">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Warehouse Facility Rent & Leases</span><span class="amount" id="pnlExpRent">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Logistics, Fleet Fuel & Freight</span><span class="amount" id="pnlExpLogistics">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Commercial Utilities & Power</span><span class="amount" id="pnlExpUtilities">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Marketing & Customer Acquisition</span><span class="amount" id="pnlExpMarketing">Rs. 0.00</span></div>
-              <div class="pnl-row"><span>Office Supplies & Maintenance</span><span class="amount" id="pnlExpOffice">Rs. 0.00</span></div>
-              <div class="pnl-row subtotal"><span>Total Operating Expenses</span><span class="amount negative" id="pnlTotalExpenses">-Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Staff Salaries & Wages</span><span class="amount" id="pnlExpSalaries">Rs.
+                  0.00</span></div>
+              <div class="pnl-row"><span>Warehouse Facility Rent & Leases</span><span class="amount" id="pnlExpRent">Rs.
+                  0.00</span></div>
+              <div class="pnl-row"><span>Logistics, Fleet Fuel & Freight</span><span class="amount"
+                  id="pnlExpLogistics">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Commercial Utilities & Power</span><span class="amount"
+                  id="pnlExpUtilities">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Marketing & Customer Acquisition</span><span class="amount"
+                  id="pnlExpMarketing">Rs. 0.00</span></div>
+              <div class="pnl-row"><span>Office Supplies & Maintenance</span><span class="amount" id="pnlExpOffice">Rs.
+                  0.00</span></div>
+              <div class="pnl-row subtotal"><span>Total Operating Expenses</span><span class="amount negative"
+                  id="pnlTotalExpenses">-Rs. 0.00</span></div>
 
               <div class="pnl-row net-total">
                 <span>NET OPERATING PROFIT (EBIT)</span>
@@ -1181,7 +1224,8 @@
                   <h3>Periodic Sales Performance Report</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1211,7 +1255,8 @@
                   <h3>Procurement & Purchase Report</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1240,7 +1285,8 @@
                   <h3>Expense Head Breakdown Statement</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1269,7 +1315,8 @@
                   <h3>Inventory Turnover & Stock Status</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1299,7 +1346,8 @@
                   <h3>Supplier Payables Aging & Overdue Timeline</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1328,7 +1376,8 @@
                   <h3>Customer Receivables Aging & Follow-up Statement</h3>
                 </div>
                 <div class="table-controls">
-                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export PDF</button>
+                  <button class="btn-action-outline" onclick="window.print()"><i class="fas fa-download"></i> Export
+                    PDF</button>
                 </div>
               </div>
               <div class="table-responsive">
@@ -1355,7 +1404,7 @@
              SCREEN 8: 💼 PAYROLL
              ===================================================================== -->
         <section class="screen-view" id="screen-payroll">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="employee-salary">
               <i class="fas fa-money-check-alt"></i> <span>Employee Salary Structure</span>
@@ -1434,7 +1483,8 @@
                 <div class="table-card-title">
                   <h3>Payroll Batch Disbursements</h3>
                 </div>
-                <button class="btn-action-primary" onclick="ERPApp.showToast('Payroll batch already closed for current period', 'info')">
+                <button class="btn-action-primary"
+                  onclick="ERPApp.showToast('Payroll batch already closed for current period', 'info')">
                   <i class="fas fa-play"></i> Process New Batch
                 </button>
               </div>
@@ -1463,7 +1513,7 @@
              SCREEN 9: 💳 PAYMENTS (AR & AP)
              ===================================================================== -->
         <section class="screen-view" id="screen-payments">
-          
+
           <div class="subtabs-bar">
             <button class="subtab-btn active" data-tab="accounts-receivable">
               <i class="fas fa-hand-holding-usd"></i> <span>Accounts Receivable (Customer Payments)</span>
@@ -1530,6 +1580,40 @@
 
         </section>
 
+        <!-- =====================================================================
+             SCREEN 9: ⚙️ SETTINGS & MASTERS
+             ===================================================================== -->
+        <section class="screen-view" id="screen-settings">
+          <div class="table-card">
+            <div class="table-card-header">
+              <div class="table-card-title">
+                <h3>System Settings & Configuration Masters</h3>
+              </div>
+            </div>
+            <div class="table-responsive" style="padding: 20px;">
+              <p>Configure company profile, chart of accounts, tax rates, financial year, and user roles.</p>
+              <div class="form-grid" style="margin-top: 20px;">
+                <div class="form-group">
+                  <label class="form-label">Company Name</label>
+                  <input type="text" class="form-control" value="CodeByte Enterprise" disabled>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Financial Year Start</label>
+                  <input type="date" class="form-control" value="2026-07-01">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Default Currency</label>
+                  <select class="form-control">
+                    <option>PKR (Rs.)</option>
+                    <option>USD ($)</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn-action-primary" style="margin-top: 20px;" onclick="ERPApp.showToast('Settings saved successfully', 'success')">Save Settings</button>
+            </div>
+          </div>
+        </section>
+
       </div>
     </main>
 
@@ -1569,8 +1653,9 @@
             </div>
           </div>
 
-          <h4 style="margin-top:20px; font-size:13px; font-weight:700; text-transform:uppercase; color:#4f46e5;">Invoice Line Items</h4>
-          
+          <h4 style="margin-top:20px; font-size:13px; font-weight:700; text-transform:uppercase; color:#4f46e5;">Invoice
+            Line Items</h4>
+
           <table class="invoice-items-table">
             <thead>
               <tr>
@@ -1603,7 +1688,9 @@
               </div>
               <div class="invoice-summary-row">
                 <span>Sales Tax (%):</span>
-                <input type="number" id="invTaxRate" class="form-control" style="width:70px; padding:4px 8px; text-align:right;" value="18" min="0" oninput="ERPApp.calculateInvoiceTotals()">
+                <input type="number" id="invTaxRate" class="form-control"
+                  style="width:70px; padding:4px 8px; text-align:right;" value="18" min="0"
+                  oninput="ERPApp.calculateInvoiceTotals()">
               </div>
               <div class="invoice-summary-row">
                 <span>Tax Amount:</span>
@@ -1611,7 +1698,9 @@
               </div>
               <div class="invoice-summary-row">
                 <span>Discount (Rs.):</span>
-                <input type="number" id="invDiscountAmount" class="form-control" style="width:100px; padding:4px 8px; text-align:right;" value="0" min="0" oninput="ERPApp.calculateInvoiceTotals()">
+                <input type="number" id="invDiscountAmount" class="form-control"
+                  style="width:100px; padding:4px 8px; text-align:right;" value="0" min="0"
+                  oninput="ERPApp.calculateInvoiceTotals()">
               </div>
               <div class="invoice-summary-row" style="display:none;">
                 <span>Discount Display:</span>
@@ -1647,7 +1736,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-action-outline modal-cancel-btn">Close</button>
-        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Invoice</button>
+        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print
+          Invoice</button>
       </div>
     </div>
   </div>
@@ -1666,7 +1756,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-action-outline modal-cancel-btn">Close</button>
-        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print Payslip</button>
+        <button type="button" class="btn-action-primary" onclick="window.print()"><i class="fas fa-print"></i> Print
+          Payslip</button>
       </div>
     </div>
   </div>
@@ -1727,7 +1818,8 @@
           <div class="form-grid">
             <div class="form-group col-span-2">
               <label class="form-label">Supplier / Company Name <span class="required">*</span></label>
-              <input type="text" class="form-control" id="suppCompany" placeholder="e.g. Pak Industrial Supplies" required>
+              <input type="text" class="form-control" id="suppCompany" placeholder="e.g. Pak Industrial Supplies"
+                required>
             </div>
             <div class="form-group">
               <label class="form-label">Key Contact Person</label>
@@ -1897,13 +1989,15 @@
             </div>
             <div class="form-group col-span-2">
               <label class="form-label">Reason for Adjustment <span class="required">*</span></label>
-              <input type="text" class="form-control" id="adjReason" placeholder="e.g. Damaged in warehouse / Recount surplus" required>
+              <input type="text" class="form-control" id="adjReason"
+                placeholder="e.g. Damaged in warehouse / Recount surplus" required>
             </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn-action-outline modal-cancel-btn">Cancel</button>
-          <button type="submit" class="btn-action-primary"><i class="fas fa-check-circle"></i> Commit Adjustment</button>
+          <button type="submit" class="btn-action-primary"><i class="fas fa-check-circle"></i> Commit
+            Adjustment</button>
         </div>
       </form>
     </div>
@@ -1923,7 +2017,8 @@
           <div class="form-grid">
             <div class="form-group col-span-2">
               <label class="form-label">Expense Title / Description <span class="required">*</span></label>
-              <input type="text" class="form-control" id="expTitle" placeholder="e.g. Commercial Electric Bill" required>
+              <input type="text" class="form-control" id="expTitle" placeholder="e.g. Commercial Electric Bill"
+                required>
             </div>
             <div class="form-group">
               <label class="form-label">Category <span class="required">*</span></label>
@@ -1938,7 +2033,8 @@
             </div>
             <div class="form-group">
               <label class="form-label">Beneficiary / Payee <span class="required">*</span></label>
-              <input type="text" class="form-control" id="expPayee" placeholder="e.g. LESCO / Service Provider" required>
+              <input type="text" class="form-control" id="expPayee" placeholder="e.g. LESCO / Service Provider"
+                required>
             </div>
             <div class="form-group">
               <label class="form-label">Amount (Rs.) <span class="required">*</span></label>
@@ -2058,4 +2154,5 @@
   <script src="js/app.js"></script>
 
 </body>
+
 </html>
